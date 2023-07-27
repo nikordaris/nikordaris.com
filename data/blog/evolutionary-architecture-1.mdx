@@ -1,0 +1,117 @@
+---
+title: 'Evolutionary Architecture: Monoliths to Microservices'
+date: '2023-07-22'
+tags: [architecture, microservices]
+draft: false
+images: ['/static/images/evolutionary-arch-1/banner.jpg']
+summary: Discover the power of Evolutionary Architecture in this three-part blog series, focusing on the transition from Monolith to Microservices. Explore cloud-native Application Services, essential principles, and best practices for building scalable, adaptable, and resilient software systems.
+---
+
+import { YouTube } from 'mdx-embed'
+
+# Introduction
+
+In the fast-paced world of software development, businesses constantly find themselves navigating an ever-changing landscape, demanding software systems that can swiftly adapt to their evolving needs. This is where Evolutionary Design emerges as a crucial ally. The concept of Evolutionary Design has grown increasingly vital in constructing scalable and resilient systems that can thrive in dynamic business environments. In this three-part blog series, we embark on a captivating journey through the world of Evolutionary Design, with a specific focus on the transformative journey from Monolithic to Microservices architecture.
+
+Monolithic architecture has long been the go-to choice for initiating new software projects, primarily due to its straightforward setup process. However, as businesses grow and evolve, the limitations of a monolith start to emerge. Splitting a monolith into microservices, while promising significant benefits, can be an intimidating endeavor, often taking years to complete, if undertaken at all. Consequently, there arises a pressing question: does starting with a monolith align with our ultimate goals? This brings us to explore the potential of cloud-native technologies, which have revolutionized containerization, making it more accessible than ever before. Yet, managing an extensive array of services can still pose formidable operational challenges.
+
+Thus, the pursuit of a middle ground is essential. In our quest for an optimal software architecture, we take a reflective journey through the emergence of Service-Oriented Architecture (SOA) three decades ago. By drawing insights from the past, we seek to evolve our initial monolithic architecture, bringing it closer to the principles of Evolutionary Design.
+
+As you join us on this thrilling journey, we will uncover the inherent challenges posed by Monolithic architecture, explore the role of Application Services as a stepping stone towards Microservices, and discover how cutting-edge cloud-native technologies have revolutionized the management of a select number of services. Throughout this series, we will delve into essential principles, techniques, and best practices that facilitate a seamless and successful transition from a Monolith to a highly scalable and resilient Microservices architecture.
+
+Get ready to immerse yourself in the exciting world of Evolutionary Design, where cloud-native advancements have made embracing Application Services and Microservices easier than ever before. Together, we will unlock the full potential of modern software design, paving the way for software systems that can not only meet today's challenges but continuously evolve to tackle tomorrow's uncertainties. Let's dive headfirst into this transformative realm, where Evolutionary Design empowers us to create software that is as dynamic and adaptable as the businesses it supports.
+
+# Evolutionary Architecture
+
+[Evolutionary Design](https://www.industriallogic.com/blog/evolutionary-design/) follows the same principle as agile Product development: delivering a minimal viable product (MVP) that addresses a limited set of problems and then iteratively enhancing it to solve more complex challenges. To illustrate this concept, let's consider the example of evolving from a skateboard to a car. Initially, you start with a basic solution that fulfills a specific purpose. As you progress, you iteratively build upon it, transforming and expanding the scope of the product to address more complex requirements. This approach enables you to discover the right solutions and the right problems to tackle along the way.
+
+The beauty of Evolutionary Design lies in its adaptability and responsiveness to changing business needs. By delivering value incrementally, it allows businesses to make course corrections, pivot, and adjust their strategies based on real-world feedback and emerging market trends. However, there is a critical factor to consider - cost. Not all projects have the luxury of waiting for the complete evolution of a product, which is why obtaining sustainable value from early iterations is essential.
+
+But how does this apply to software architecture? In the realm of software architecture, we can apply the principles of Evolutionary Design to transform a Monolithic application into a set of services and eventually into Microservices. The initial Monolith serves as the MVP, providing early value and functionality during the early stages of the product's lifecycle.
+
+However, as a product evolves and grows, it may outgrow the capabilities of the Monolith. Just as a skateboard is limited in handling complex transportation needs, a Monolith might become a hindrance to further progress when the application becomes more complex and requires greater scalability, flexibility, and resilience. If a product's architecture remains stuck in the Monolithic phase, it risks stifling the evolution and locking itself into a rigid, hard-to-maintain structure. The only apparent escape from such a situation is to undergo a complete rewrite, which can be time-consuming, expensive, and fraught with risks.
+
+With our skateboard, it seems obvious that we will need to completely throw out our design in order to build a car. We have convinced ourselves that the same is true for software architecture. That we must rewrite the monolith into microservices. However, there is an alternative approach that allows us to avoid the rewrite dilemma. Before exploring this solution, let's take a closer look at the advantages and pitfalls of Monolithic architecture.
+
+Advantages of Monolithic Architecture:
+
+1. **Simplicity and Ease of Development**: Monolithic applications are relatively straightforward to develop, test, and deploy. They offer a cohesive codebase, making it easier for developers to understand the entire system and collaborate effectively.
+1. **Performance**: Monoliths can have lower overhead and latency compared to distributed systems, as there is no inter-service communication.
+1. **Data Consistency**: Since a Monolith usually relies on a single database, maintaining data consistency across the application is simpler.
+1. **Simplified Deployment**: Deploying a Monolith typically involves deploying a single unit, which can be less complex than managing multiple services.
+
+Pitfalls of Monolithic Architecture:
+
+1. **Scalability and Performance Limitations**: Monoliths can become a performance bottleneck and are challenging to scale independently. The entire application must scale together, even if only specific parts require more resources.
+1. **Maintainability**: As the application grows, a Monolith can become harder to maintain and understand due to its increasing complexity.
+1. **Deployment Dependencies**: Changes in one part of the Monolith can affect the entire application, leading to potential deployment challenges and risks.
+1. **Technology Stack Coupling**: A Monolith typically relies on a single technology stack, making it difficult to leverage the best tools and technologies for each specific task.
+
+In the next section, we will explore the role of Application Services as a stepping stone towards a Microservices architecture. By leveraging Application Services, we can strike a balance between the simplicity of the Monolith and the flexibility of Microservices, paving the way for a smoother transition while embracing Evolutionary Design principles.
+
+# Service-Oriented Architecture
+
+Service-Oriented Architecture (SOA) once dominated discussions in the software industry, but its popularity waned due to challenges associated with complex and rigid implementations, especially when using Web Services. However, it's important to recognize that SOA laid the groundwork for modern microservices architecture, and valuable lessons from SOA have been incorporated into the design philosophy of microservices. In fact, Martin Fowler, a renowned software architect, defined [microservices](https://www.martinfowler.com/microservices/) as an evolution of SOA, aiming to learn from past pitfalls and create more flexible and scalable solutions.
+
+Fowler's key principles for microservices include:
+
+1. **Componentization via Services**: Both SOA and microservices encourage breaking down complex software systems into smaller, manageable units called services. These services represent specific functionalities or business capabilities, and they can be independently developed, deployed, and maintained.
+1. **Organizing Services Around Business Capabilities**: Instead of organizing services around technical concerns, such as database or user interface, microservices architecture emphasizes aligning services with distinct business capabilities. This approach ensures that each service has a clear purpose and contributes directly to the overall business objectives.
+1. **Decentralized Governance and Data Management**: Microservices advocate for decentralized decision-making and data management. Each service should have its own data storage and should be responsible for its data consistency and integrity. This decentralization reduces dependencies and bottlenecks, allowing for greater autonomy and faster development cycles.
+1. **Evolutionary Design**: The iterative, evolutionary nature of microservices architecture draws inspiration from SOA's core principle of gradual evolution. Microservices should evolve and adapt as business requirements change, making it easier to respond to market dynamics and customer needs.
+
+While Microservices architecture offers numerous benefits, it's essential to consider the trade-offs. Here are a few key considerations:
+
+1. **Infrastructure and Orchestration Costs**: Managing a microservices architecture requires additional infrastructure to handle service orchestration and communication. This includes implementing containerization technologies like Docker or Kubernetes to facilitate service deployment, scaling, and load balancing. Setting up and maintaining the infrastructure for container orchestration can incur costs in terms of hardware, software licenses, and skilled personnel. Additionally, in a microservices ecosystem, data may need to be duplicated or synchronized between services, resulting in additional costs for implementing Extract, Transform, Load (ETL) processes or data synchronization mechanisms.
+1. **Operational Monitoring and Management Costs**: Microservices architecture introduces a higher level of operational complexity compared to monolithic applications. Monitoring and managing a distributed system with numerous services require robust tools and processes. Implementing comprehensive monitoring, logging, and tracing mechanisms, as well as establishing efficient incident management practices, can result in additional operational costs. Investing in proper monitoring and management tools is crucial to ensure the health and performance of the microservices ecosystem.
+1. **Development and Testing Effort**: Microservices architecture promotes independent development and deployment of services. While this provides flexibility, it also increases the development and testing effort. Each service needs to be developed, tested, and maintained separately, which can lead to increased development costs and longer release cycles. Additionally, end-to-end testing can be challenging to stand up all of the service dependencies. Efficient collaboration and testing practices, along with appropriate automation tools, are essential to streamline these processes and optimize costs.
+
+The benefits of microservices sound great but the complexity can be cost prohibitive for early stage products. We'll solve this by throwing out the micro constraint and focus more on the service's purpose and loose coupling. But before we get into that I want to bring us back to SOA and take a closer look at two significant service types: Functional Services and Application Services.
+
+Functional Services typically satisfy specific, small purposes and emphasize loose coupling. Sounds a lot like our microservices. While these services have their value, they may lack the broader business context required to fulfill an entire business capability without creating a tightly coupled dependency chain with other microservices. This can lead to challenges in maintaining and evolving the system over time. Small changes like displaying the birthday date on a user's settings page could devolve into a dependency chain nightmare.
+
+<YouTube youTubeId="y8OnoxKotPQ" skipTo={{ h: 0, m: 0, s: 9 }} />
+
+On the other hand, Application Services are designed to encapsulate and provide the functionality of a standalone business flow. These services encompass multiple business functions, each of which has the potential to be a separate microservice. It's important to note that Application Services and microservices are not [mutually exclusive](https://www.ibm.com/cloud/blog/soa-vs-microservices); rather, they complement each other effectively by helping us organize complex systems and reduce cognitive load.
+
+Consider this Application Service with multiple business functions that are all related to the Application Serivice's business purpose:
+
+![Application Service](/static/images/evolutionary-arch-1/application-service.png)
+
+Now look at that same Application Service split up into Microservices. They look nearly identical except for the fact that we have multiple databases now. You can see how our data is the key constraint in our ability to evolve into microservices.
+
+![Application Service with Microservices](/static/images/evolutionary-arch-1/application-micro-services.png)
+
+Now, consider an architecture with 12 Application Services rather than 120 microservices. The architectural function is identical only the former is easier to comprehend, manage, and maintain, as it provides a higher-level abstraction of business capabilities. We don't need to care about the microservices behind the Application Serices. Those are another team's problem. We only care about the outward facing API. This prevents the architecture from becoming overly fragmented and helps avoid the pitfalls associated with excessive microservices proliferation.
+
+In the next section, we will delve into the strategies for avoiding the traps of monolithic architectures and embracing the development of Application Services to foster a more flexible and scalable system. By combining the best aspects of SOA and microservices, we can create a software architecture that can evolve gracefully to meet the changing needs of the business. Stay tuned for an in-depth exploration of these strategies and their benefits.
+
+# Skipping the Monolith: Cloud-Native Application Services
+
+Now that we have embraced the Application Services mindset and understood its advantages over traditional Monolithic architectures, let's explore how we can build our first Application Service and set the foundation for a scalable and flexible system.
+
+The primary distinction between an Application Service and a monolith lies in how we approach data and business logic within the service. Unlike a monolith, where data and business logic are often tightly coupled, our Application Service focuses on decoupling these components to create a more modular and maintainable structure. Additionally, Application Services differ from microservices in that they avoid the complexity of duplicating data with intricate data pipelines.
+
+An essential aspect of adopting Application Services is to define more than one service as early as possible. Creating multiple services from the outset sets a precedent and reinforces the idea that this is an acceptable approach. If you only have one Application Service and keep dumping everything into it, you run the risk of essentially recreating a monolith, defeating the purpose of this evolutionary architecture.
+
+When building our early-stage Application Service, we impose a constraint of avoiding synchronous calls to other services. This is essential to prevent falling into the dependency hell trap that plagued some implementations of Service-Oriented Architecture (SOA). By avoiding synchronous calls between services, we eliminate potential bottlenecks and reduce the risk of cascading failures in the system.
+
+At the initial stages, your Application Service may not feel drastically different from your monolith. However, as you gradually add more data resources, you'll be able to assess whether they genuinely belong within the scope of your service. If there's uncertainty, it's best to default on keeping the data isolated within the service. This approach allows you to extract the data later when you have more clarity on its proper place. The goal is to avoid tightly coupling data and services until it becomes necessary for performance optimization or clear architectural decisions.
+
+Continuous Integration and Continuous Deployment (CI/CD) will be one of the initial challenges you face. However, modern tools like GitHub Actions and monorepos make this process relatively straightforward. You can create reusable templates and target specific service directories to build and deploy only the services that have undergone changes. Avoid over-engineering the CI/CD process at the beginning and focus on simplicity. As your system evolves, you can enhance the CI/CD pipeline to meet growing needs.
+
+Next challenge you will face is service orchestration. Kubernetes is a fantastic product but the barrier to entry can be expensive. You will need to play to your strengths and pick the orchestration tool that makes sense for your organization. Consider Serverless Functions or lightweight container orchestrators like AWS ECS. Swapping out your service runtime later is fairly trivial so pick the easiest product to get up and running.
+
+# Conclusion: Unleashing the Power of Evolutionary Architecture
+
+As we conclude this first part of our three-part blog series on Evolutionary Architecture, we reflect on the transformative potential that a cloud-native approach and Application Services bring to modern software design. By embracing Evolutionary Design, you have laid a solid foundation for building an architecture that can seamlessly adapt to the ever-changing landscape of business requirements.
+
+The journey from a Monolithic architecture to a cloud-native Microservices ecosystem is an exhilarating one, and the next article in our series, "Evolutionary Architecture Part 2: Migrating a Monolith," will serve as your guide to navigating this path. We will delve deeper into the intricacies of transitioning from a Monolith to Microservices, exploring essential principles, techniques, and best practices that will empower you to create a highly scalable and resilient system.
+
+One of the key highlights of this journey lies in the role of Application Services as a stepping stone towards Microservices. By thoughtfully organizing your services around distinct business capabilities, you create a modular, maintainable, and comprehendible architecture. This approach allows you to avoid the common pitfalls associated with both Monolithic and over-distributed Microservices architectures, enabling your system to evolve gracefully as you grow.
+
+Throughout this series, we have emphasized the significance of iterative and evolutionary design. Evolutionary Architecture empowers you to make informed decisions based on real-world feedback, fostering a dynamic and adaptable software system that can meet the evolving needs of your business.
+
+As we embark on the next phase of our exploration, we invite you to stay tuned for valuable insights and practical guidance on successfully migrating from a Monolith to a cloud-native Microservices architecture. Together, we will unlock the full potential of modern software design, making your system more resilient, scalable, and responsive to the dynamic demands of your business landscape.
+
+In this thrilling journey through Evolutionary Architecture, we celebrate the continuous evolution of software design, where cloud-native advances and Application Services help us create systems that truly align with the ever-changing needs of businesses. Thank you for joining us on this adventure, and we look forward to sharing the next installment with you soon!
