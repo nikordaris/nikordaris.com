@@ -6,30 +6,37 @@ import formatDate from '@/lib/utils/formatDate'
 import { sortedBlogPost, allCoreContent } from '@/lib/utils/contentlayer'
 import { InferGetStaticPropsType } from 'next'
 import NewsletterForm from '@/components/NewsletterForm'
-import { allBlogs } from 'contentlayer/generated'
+import { allAuthors, allBlogs } from 'contentlayer/generated'
+import { MDXLayoutRenderer } from '@/components/MDXComponents'
 
 const MAX_DISPLAY = 5
+const DEFAULT_LAYOUT = 'AuthorSimple'
 
 export const getStaticProps = async () => {
   // TODO: move computation to get only the essential frontmatter to contentlayer.config
   const sortedPosts = sortedBlogPost(allBlogs)
   const posts = allCoreContent(sortedPosts)
-
-  return { props: { posts } }
+  const author = allAuthors.find((p) => p.slug === 'default')
+  return { props: { posts, author } }
 }
 
-export default function Home({ posts }: InferGetStaticPropsType<typeof getStaticProps>) {
+export default function Home({ posts, author }: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
     <>
       <PageSEO title={siteMetadata.title} description={siteMetadata.description} />
-      <div className="divide-y divide-gray-200 dark:divide-gray-700">
-        <div className="space-y-2 pt-6 pb-8 md:space-y-5">
-          <h1 className="text-3xl font-extrabold leading-9 tracking-tight text-gray-900 dark:text-gray-100 sm:text-4xl sm:leading-10 md:text-6xl md:leading-14">
-            Latest
-          </h1>
-          <p className="text-lg leading-7 text-gray-500 dark:text-gray-400">
-            {siteMetadata.description}
-          </p>
+      <div>
+        <div className="divide-y divide-gray-200 dark:divide-gray-700">
+          <div className="space-y-2 pt-6 pb-8 md:space-y-5">
+            <MDXLayoutRenderer layout={author.layout || DEFAULT_LAYOUT} content={author} />
+          </div>
+          <div className="space-y-2 pt-6 pb-8 md:space-y-5">
+            <h1 className="text-2xl font-extrabold leading-9 tracking-tight text-gray-900 dark:text-gray-100 sm:text-4xl sm:leading-10 md:text-6xl md:leading-14">
+              Latest
+            </h1>
+            <p className="text-lg leading-7 text-gray-500 dark:text-gray-400">
+              {siteMetadata.description}
+            </p>
+          </div>
         </div>
         <ul className="divide-y divide-gray-200 dark:divide-gray-700">
           {!posts.length && 'No posts found.'}

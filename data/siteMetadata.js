@@ -2,7 +2,7 @@ const siteMetadata = {
   title: 'Nikordaris Blog',
   author: 'Nick Harris',
   headerTitle: 'Nikordaris',
-  description: 'A place to put things adjacent to Nick Harris',
+  description: 'I did a thing',
   language: 'en-us',
   theme: 'system', // system, dark or light
   siteUrl: 'https://nikordaris.com',
