@@ -33,7 +33,7 @@ interface Props {
 }
 
 export default function PostLayout({ content, authorDetails, next, prev, children }: Props) {
-  const { slug, date, title, tags } = content
+  const { slug, date, title, tags, images } = content
 
   return (
     <SectionContainer>
@@ -102,7 +102,18 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
               </dd>
             </dl>
             <div className="divide-y divide-gray-200 dark:divide-gray-700 xl:col-span-3 xl:row-span-2 xl:pb-0">
-              <div className="prose max-w-none pt-10 pb-8 dark:prose-dark">{children}</div>
+              <div className="prose max-w-none pt-10 pb-8 dark:prose-dark">
+                {images && (
+                  <Image
+                    src={images[0]}
+                    width="1024px"
+                    height="500px"
+                    alt="banner"
+                    className="h-10 w-10"
+                  />
+                )}
+                {children}
+              </div>
               <div className="pt-6 pb-6 text-sm text-gray-700 dark:text-gray-300">
                 <Link href={discussUrl(slug)} rel="nofollow">
                   {'Discuss on Twitter'}
