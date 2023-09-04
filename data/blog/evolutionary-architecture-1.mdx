@@ -1,0 +1,120 @@
+---
+title: 'Evolutionary Architecture: Services all the way down'
+date: '2023-07-22'
+tags: [architecture, microservices, SOA, DDD, events]
+draft: false
+images: ['/static/images/evolutionary-arch-1/services-always-has-been.png']
+summary: Discover the power of Evolutionary Architecture in this three-part blog series, focusing on the transition from Monolith to Microservices. Explore cloud-native Application Services, essential principles, and best practices for building scalable, adaptable, and resilient software systems.
+---
+
+import { YouTube } from 'mdx-embed'
+
+# Introduction
+
+[Evolutionary Design](https://www.industriallogic.com/blog/evolutionary-design/) is one of those concepts that leave a lasting impression once you embrace it. From a Product mindset perspective, it's a no-brainer. Of course, let's build a complete, useful, and, most importantly, cost-effective product first and see how it lands in the market. It helped us break free from the manufacturing line analogy, which was the biggest pitfall, leading to excessive spending on complex products that no one wants.
+
+However, how does this philosophy impact our architecture? How do we support Evolutionary Design within our architecture? Microservices burst onto the scene and initially appeared to be the answer. They offered cheap, single-purpose, throwaway services - seemingly in line with the principles of Evolutionary Design, which encourages us to be ready to discard and evolve.
+
+But here's the catch: While a microservice may be cost-effective, managing a multitude of microservices can become expensive. If you find yourself building an automotive production line just to create a skateboard, you've missed the essence of Evolutionary Design. This is why "start with the monolith" has been the prevailing wisdom. However, in practice, that initial monolith is rarely discarded; it becomes the foundation for your evolving architecture.
+
+To complicate matters, that monolith often turns out to be the most critical part of your product. While your product evolves to meet market demands, your architecture does not. Your car ends up just being a Flintstone foot-powered carriage. Once again, the practice of Evolutionary Design falls short, as the core design for your skateboard remains unchanged.
+
+So, why is it so challenging for our monolith to evolve? What are we doing wrong? To find answers, we will delve into key architectural concepts that have been instrumental in our industry over the past 30 years: Domain-Driven Design (DDD), Service-Oriented Architecture, and Event-Driven Architecture. Each of these architectural patterns introduced a different view of what a Service is and how you can use services to achieve different goals. To understand microservices and how to evolve a monolith we need to first understand how all of these patterns fit together.
+
+# Monoliths & Microservices
+
+Before we begin, let's do a quick look at what a Monolith is, what a Microservice is, why Monoliths struggle to evolve, and why Microservices are difficult to manage.
+
+_Advantages of Monolithic Architecture:_
+
+- **Simplicity and Ease of Development**: Monolithic applications are relatively straightforward to develop, test, and deploy. They offer a cohesive codebase, making it easier for developers to understand the entire system and collaborate effectively.
+- **Performance**: Monoliths can have lower overhead and latency compared to distributed systems, as there is no inter-service communication. Performance tuning is easy because everything is in one spot.
+- **Data Consistency**: Since a Monolith usually relies on a single database, maintaining data consistency across the application is simpler.
+- **Simplified Deployment**: Deploying a Monolith typically involves deploying a single unit, which can be less complex than managing multiple services.
+
+_Pitfalls of Monolithic Architecture:_
+
+- **Scalability and Performance Limitations**: Monoliths can become a performance bottleneck and are challenging to scale independently. The entire application must scale together, even if only specific parts require more resources.
+- **Maintainability**: As the application grows, a Monolith can become harder to maintain and understand due to its increasing complexity.
+- **Deployment Dependencies**: Changes in one part of the Monolith can affect the entire application, leading to potential deployment challenges and risks.
+- **Technology Stack Coupling**: A Monolith typically relies on a single technology stack, making it difficult to leverage the best tools and technologies for each specific task.
+
+_Martin Fowler's key principles for [microservices](https://www.martinfowler.com/microservices/) include:_
+
+- **Componentization via Services**: Both SOA and microservices encourage breaking down complex software systems into smaller, manageable units called services. These services represent specific functionalities or business capabilities, and they can be independently developed, deployed, and maintained.
+- **Organizing Services Around Business Capabilities**: Instead of organizing services around technical concerns, such as a database or user interface, microservices architecture emphasizes aligning services with distinct business capabilities. This approach ensures that each service has a clear purpose and contributes directly to the overall business objectives.
+- **Decentralized Governance and Data Management**: Microservices advocate for decentralized decision-making and data management. Each service should have its data storage and should be responsible for its data consistency and integrity. This decentralization reduces dependencies and bottlenecks, allowing for greater autonomy and faster development cycles.
+- **Evolutionary Design**: The iterative, evolutionary nature of microservices architecture draws inspiration from SOA's core principle of gradual evolution. Microservices should evolve and adapt as business requirements change, making it easier to respond to market dynamics and customer needs.
+
+_Challenges with a microservice architecture:_
+
+- **Infrastructure and Orchestration Costs**: Managing a microservices architecture requires additional infrastructure to handle service orchestration and communication. This includes implementing containerization technologies like Docker or Kubernetes to orchestrate service deployment, scaling, and load balancing. Setting up and maintaining the infrastructure for container orchestration can incur costs in terms of hardware, software licenses, and skilled personnel. Additionally, in a microservices ecosystem, data may need to be duplicated or synchronized between services, resulting in additional costs for implementing Extract, Transform, Load (ETL) processes or data synchronization mechanisms.
+- **Operational Monitoring and Management Costs**: Microservices architecture introduces a higher level of operational complexity compared to monolithic applications. Monitoring and managing a distributed system with numerous services require robust tools and processes. Implementing comprehensive monitoring, logging, and tracing mechanisms, as well as establishing efficient incident management practices, can result in additional operational costs. Investing in proper monitoring and management tools is crucial to ensure the health and performance of the microservices ecosystem.
+- **Development and Testing Effort**: Microservices architecture promotes independent development and deployment of services. While this provides flexibility, it also increases the development and testing effort. Each service needs to be developed, tested, and maintained separately, which can lead to increased development costs and longer release cycles. Additionally, end-to-end testing can be challenging to stand up all of the service dependencies. Efficient collaboration and testing practices, along with appropriate automation tools, are essential to streamline these processes and optimize costs.
+
+So now we can see the challenge we have in front of us. We need to start with our Monolith to defer some of those operational costs of Microservices. But we will want to eventually evolve to Microservices as this enables the most adaptable architecture to satisfy our Evolutionary Design goals. The problem is that the Monolith is a trap. So let's dive into Eric Evans's Domain-Driven Design to see how we can avoid the monolith trap.
+
+# DDD Your Monolith
+
+First off, if you haven't had the chance to read [Eric Evans's Domain-Driven Design](https://www.dddcommunity.org/book/evans_2003/) book, it's understandable. While it's a fantastic piece of work, it can be quite challenging to digest. What I found more accessible, and in strong alignment with our goal of Evolutionary Design, is [Harry J.W. Percival & Bob Gregory's "Architecture Patterns with Python."](https://www.cosmicpython.com/) This book offers a practical approach to gradually incorporating DDD components into your application as the need arises. This aligns perfectly with our approach when building that first skateboard prototype - we don't require the full complexity of DDD right away, just as we don't need the operational burden of microservices at this stage. However, what we do want is an architecture that can evolve, and DDD Application Services provides just that.
+
+Let's take a closer look at what a DDD Application Service is. Among all the concepts in DDD, this one is the most straightforward. It represents the core public-facing application responsible for coordinating and executing business logic or data access for a specific business intent. This might sound similar to the principles of microservices. What's significant here is that your DDD Application Service has the potential to evolve into a standalone microservice. What could hinder this transition in practice? It's the coupling with other Application Services. If your application services share the same domain entities, services, and database without clear separation of ownership boundaries between them within your monolith, you'll struggle to break down your monolith later.
+
+![Monolith](/static/images/evolutionary-arch-1/monolith-ddd.png)
+
+It's important to note that when mentioning DDD, we risk attracting zealous advocates. Therefore, it's crucial to stay focused on our ultimate goal - Evolutionary Design. We're not aiming to transform our monolith into a permanently DDD-driven haven. Instead, we aim to make it easy to disassemble later. So, we should avoid delving too deep into DDD for the monolith and only extract essential elements to maintain loose coupling within our Domain models. When the product reaches an inflection point and clarity emerges regarding its direction, we should prepare to escape the monolith. Let's now explore Service-Oriented Architecture (SOA) to understand how we can deconstruct our DDD Application Services into SOA services.
+
+# Escaping the Monolith: Service-Oriented Architecture
+
+In many ways, microservices can be viewed as an evolution and refinement of SOA (Service-Oriented Architecture). It's worth noting that several of Martin Fowler's principles for microservices have their origins in SOA. So, you might wonder why we are discussing SOA before diving straight into microservices. The key difference is that microservices place a strong emphasis on loose coupling and decentralized data management - aspects that early SOA implementations sometimes neglect.
+
+Early SOA services often shared code, and databases, and made synchronous calls to each other, effectively resembling a distributed monolith. This approach eventually led to challenges and limitations. Consequently, the microservices revolution gained momentum, and SOA fell out of fashion. However, this distributed monolith trap is still prevalent in microservices architecture because of the challenges and costs of implementing loosely coupled services.
+
+<YouTube youTubeId="y8OnoxKotPQ" skipTo={{ h: 0, m: 0, s: 9 }} />
+
+So, where does this leave us? We want to escape the monolithic application, but we must avoid the distributed monolith trap. This means we need to impose constraints on our SOA implementation that previous iterations did not have. Specifically, we should avoid shared databases and service-to-service synchronous communication. Our services must be autonomous but unlike microservices, we don't care about size and scope, just loose coupling. It may seem like we are initially building multiple monoliths, but these first services create essential boundaries within our architecture, decoupling critical domains. This, in turn, opens doors to benefits like team autonomy, independent deployment pipelines, and heterogeneous scaling strategies - akin to microservices but on a smaller scale.
+
+Crucially, we don't need complex orchestration tools like Kubernetes at this stage. Simple container management solutions or even serverless functions, along with straightforward CI/CD pipelines, suffice. Remember, our goal is to evolve our architecture, not solve all operational challenges immediately. We aim to make the initial pain manageable as we progress.
+
+Next, let's explore an example in the realm of e-commerce to understand how to carve out autonomous services and how our constraints on SOA require another technique, Event-Driven Architecture.
+
+# Beyond SOA: Event-Driven Architecture
+
+Let's take a closer look at an example within the context of e-commerce to illustrate how we can carve out autonomous services from our evolving architecture. In this example, we have three primary autonomous services: Inventory, Accounts, and Orders.
+
+- **Inventory**: This service is responsible for managing product availability, which can become complex when dealing with various warehouses, suppliers, and stock maintenance workflows. The challenge here is to ensure that stock levels remain accurate and up-to-date across multiple locations, all while adhering to various supply chain intricacies.
+- **Accounts**: Accounts play a central role in our e-commerce platform, encompassing user accounts for both suppliers and buyers. This involves intricate workflows for billing in both B2B (business-to-business) interactions with suppliers and B2C (business-to-consumer) interactions with buyers. Ensuring smooth billing processes while keeping these two worlds separate presents a significant challenge.
+- **Orders**: The Orders service faces the task of connecting buyer and supplier information while dealing with data spread across multiple services. However, synchronous calls to these services or direct access to their databases is not an option. The challenge here is to orchestrate asynchronous workflows to maintain order consistency and fulfillment.
+
+To address these challenges, we need to embrace [Event-Driven Architecture](https://en.wikipedia.org/wiki/Event-driven_architecture). Our Application Services will manage critical business transactions, such as updating inventory, adding new user accounts, or placing orders. Instead of requiring synchronous completion of complex workflows, the goal is to ensure eventual consistency through events. For instance, when a user places an order, we record the user ID and inventory ID and then signal the event that an order has been placed. Notice we aren't sending a Command dictating what happens next, we don't know what happens next. It's not the Order Service's job to know. This is what it means to be loosely coupled. If we change the workflow for what happens after an Order is placed, the Order service doesn't change. It continues to accept orders and publish events none-the-wiser.
+
+![Event-Driven Architecture](/static/images/evolutionary-arch-1/ecommerce-event-driven-arch.png)
+
+When defining service boundaries in this initial phase, it's essential to keep things simple. Start with two or three services that involve straightforward, single-step event workflows. As your architecture evolves, you can break these services down into smaller, more specialized units, each with increasingly complex asynchronous workflows. The key is to establish a foundational architecture that can evolve alongside your growing needs.
+
+# Putting the Micro in SOA
+
+Transforming into microservices can be one of the most challenging phases in our Evolutionary Design journey. Up to this point, we've defined essential [boundaries](https://www.ibm.com/cloud/blog/soa-vs-microservices) and established a foundation with our application services. Now, as we contemplate breaking up the application service into microservices, we encounter unique complexities.
+Consider our Inventory service, which initially appears to handle everything related to product availability. It's responsible for managing stock levels, handling workflows across various warehouses, and coordinating with different suppliers. At first glance, these functions might seem closely tied together within a single application service. However, as we delve deeper, we discover opportunities for breaking down this monolithic Inventory service into microservices.
+
+_Here's how we might approach this transformation:_
+
+- **Warehouse Management**: One microservice could focus exclusively on warehouse management. It would be responsible for tracking and maintaining stock levels within each warehouse, optimizing storage, and managing inventory workflows unique to each location.
+- **Supplier Integration**: Another microservice could handle interactions with suppliers. It would manage communication, orders, and inventory updates with suppliers, ensuring a smooth supply chain process.
+- **Stock Availability**: This microservice could provide real-time stock availability information to the front-end application, ensuring accurate product availability data for customers.
+- **Order Fulfillment**: For the order fulfillment process, we might create a microservice that consumes events from the Warehouse Management and Supplier Integration microservices to orchestrate the entire workflow for the order.
+
+Breaking down the Inventory service in this manner allows us to address specific business capabilities with dedicated microservices. Each microservice can be developed, deployed, and maintained independently, offering greater agility and scalability. However, we are going to hit similar data-sharing problems as we did with our Orders service. We can use the Event-Driven Strategy as before only now things start to get complicated. Especially when we have an outage. We now need to be able to support Extract, Transform, Load (ETL) data syncing jobs to backfill and correct our Order Fulfillment service to ensure our Orders properly update our inventory and trigger the appropriate shipping request to the buyer. These are all solvable problems but when compared to our monolith this feels like a big step up in complexity. This is why staying in an SOA architecture is a reasonable trade-off for some products because the scale of operations does not warrant the added complexity of microservices.
+
+# Conclusion
+
+This journey has illuminated the central role of services in our architectural evolution. Whether we are dealing with a monolith, SOA, Event-Driven, or microservices, services remain at the core. The fundamental principles of services, including loose coupling, autonomy, and scalability, persist across all these approaches. What distinguishes them is how we implement and structure these services within our architecture, and this journey has shown us that it's an evolutionary process that adapts to the scale of our operations.
+
+_Key Takeaways_
+
+- **Services are Fundamental**: Services play a central role in architectural design, regardless of whether it's a monolith, Service-Oriented Architecture (SOA), Event-Driven, or microservices.
+- **Evolutionary Design**: Embracing an evolutionary approach allows architectural decisions to adapt over time based on evolving needs and operational scale.
+- **Microservices Complexity**: Transitioning to microservices can introduce complexity, particularly in data sharing and event-driven workflows, but it offers benefits such as agility and scalability.
+- **Service Boundaries**: Defining clear service boundaries and maintaining loose coupling are essential for successful architectural transitions.
+- **Event-Driven Architecture**: Implementing an Event-Driven Architecture enables asynchronous workflows and eventual consistency, particularly useful when breaking down monolithic services and avoiding the distributed monolith trap.
+- **SOA as a Trade-Off**: Staying within a Service-Oriented Architecture (SOA) can be a reasonable trade-off for some products when the added complexity of microservices is not warranted by the scale of operations.
