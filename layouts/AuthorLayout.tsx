@@ -10,7 +10,19 @@ interface Props {
 }
 
 export default function AuthorLayout({ children, content }: Props) {
-  const { name, avatar, occupation, company, email, twitter, linkedin, github } = content
+  const {
+    name,
+    avatar,
+    occupation,
+    company,
+    email,
+    twitter,
+    linkedin,
+    github,
+    skills1,
+    skills2,
+    skills3,
+  } = content
 
   return (
     <>
@@ -39,6 +51,42 @@ export default function AuthorLayout({ children, content }: Props) {
               <SocialIcon kind="linkedin" href={linkedin} />
               <SocialIcon kind="twitter" href={twitter} />
             </div>
+            {skills1 && (
+              <>
+                <h3 className="pt-8 pb-2 text-lg font-bold leading-8 tracking-tight text-primary-500">
+                  MASTERY OF
+                </h3>
+                {skills1.map((skill, idx) => (
+                  <div className="text-gray-500 dark:text-gray-400" key={idx}>
+                    {skill}
+                  </div>
+                ))}
+              </>
+            )}
+            {skills2 && (
+              <>
+                <h3 className="pt-8 pb-2 text-lg font-bold leading-8 tracking-tight text-primary-500">
+                  SKILLED WITH
+                </h3>
+                {skills2.map((skill, idx) => (
+                  <div className="text-gray-500 dark:text-gray-400" key={idx}>
+                    {skill}
+                  </div>
+                ))}
+              </>
+            )}
+            {skills3 && (
+              <>
+                <h3 className="pt-8 pb-2 text-lg font-bold leading-8 tracking-tight text-primary-500">
+                  EXPOSURE TO
+                </h3>
+                {skills3.map((skill, idx) => (
+                  <div className="text-gray-500 dark:text-gray-400" key={idx}>
+                    {skill}
+                  </div>
+                ))}
+              </>
+            )}
           </div>
           <div className="prose max-w-none pt-8 pb-8 dark:prose-dark xl:col-span-2">{children}</div>
         </div>
