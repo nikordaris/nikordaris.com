@@ -11,10 +11,10 @@ import { CoreContent } from '@/lib/utils/contentlayer'
 import { ReactNode } from 'react'
 import type { Blog, Authors } from 'contentlayer/generated'
 
-const editUrl = (slug) => `${siteMetadata.siteRepo}/blob/master/data/blog/${slug}`
+const editUrl = (slug) => `${siteMetadata.siteRepo}/blob/master/data/blog/${slug}.mdx`
 const discussUrl = (slug) =>
   `https://mobile.twitter.com/search?q=${encodeURIComponent(
-    `${siteMetadata.siteUrl}/blog/${slug}`
+    `${siteMetadata.siteDomain}/blog/${slug}`
   )}`
 
 const postDateTemplate: Intl.DateTimeFormatOptions = {

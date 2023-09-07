@@ -6,6 +6,7 @@ const siteMetadata = {
   language: 'en-us',
   theme: 'system', // system, dark or light
   siteUrl: 'https://nikordaris.com',
+  siteDomain: 'nikordaris.com',
   siteRepo: 'https://github.com/nikordaris/nikordaris.com',
   siteLogo: '/static/images/logo.png',
   image: '/static/images/avatar.png',
